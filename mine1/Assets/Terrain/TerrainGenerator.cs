@@ -8,10 +8,12 @@ public class TerrainGenerator : MonoBehaviour
     private Cube block;
     private int width = 16;
     private int depth = 16;
+    private int maxDepth = 10;
     [SerializeField]
     private List<Chunk> chunks = new List<Chunk>();
     private BlockDatabase blockDatabase = new BlockDatabase();
     private int blockCount = 0;
+    
 
     void Start()
     {
@@ -25,6 +27,7 @@ public class TerrainGenerator : MonoBehaviour
     private void AddBlockToChunk(int x, int y, int z, Chunk newChunk) 
     {
         GameObject newBlock = GameObject.Instantiate(block.gameObject, this.transform);
+        newBlock.GetComponent<Block>().SetBlock(blockDatabase.GetBlockInfo(blockDatabase.CalculateBlockID(y)));
         Vector3 coord = new Vector3(x, y, z);
         newChunk.AddBlock(newBlock, coord);
         blockCount++;
@@ -40,7 +43,11 @@ public class TerrainGenerator : MonoBehaviour
                 AddBlockToChunk((int)(x + pos.x), (int)(Procedural.BlockHeight(x, z) + pos.y), (int)(z + pos.z), newChunk);
 
                 for (int d=1; d<depth; d++) {
-                    AddBlockToChunk((int)(x + pos.x), (int)(Procedural.BlockHeight(x, z) + pos.y - d), (int)(z + pos.z), newChunk);
+                    int h = (int)(Procedural.BlockHeight(x, z) + pos.y - d);
+                    if (h < -maxDepth)
+                        continue;
+
+                    AddBlockToChunk((int)(x + pos.x), h, (int)(z + pos.z), newChunk);
                 }
             }
         }

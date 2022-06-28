@@ -14,10 +14,22 @@ public class BlockDatabase
     private void Initialize()
     {
         database.Add(0, new BlockInfo("Grass", 2, false, true, true, true, BlockInfo.toolableTool.shovel, Color.green));
+        database.Add(1, new BlockInfo("Dirt", 2, false, true, false, true, BlockInfo.toolableTool.shovel, new Color(58.8f/255f, 29.4f/255f, 0)));
+        database.Add(2, new BlockInfo("Stone", 10, false, false, false, true, BlockInfo.toolableTool.pickaxe, Color.grey));
+        database.Add(3, new BlockInfo("Sand", 2, false, true, false, true, BlockInfo.toolableTool.shovel, Color.yellow));
     }
     public BlockInfo GetBlockInfo(int id)
     {
         return database[id];
+    }
+    public int CalculateBlockID(int y)
+    {
+        if (y > 0)
+            return 0;
+        else if (y > -3f)
+            return 1;
+        else
+            return 2;
     }
 }
 public struct BlockInfo
@@ -47,5 +59,6 @@ public struct BlockInfo
         this.tool = tool;
         this.color = color;
     }
+   
     
 }
