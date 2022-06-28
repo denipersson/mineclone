@@ -60,6 +60,8 @@
     <Compile Include="Assets/Terrain/Procedural.cs" />
     <Compile Include="Assets/Terrain/Blocks/Grid.cs" />
     <Compile Include="Assets/Terrain/TerrainGenerator.cs" />
+    <Compile Include="Assets/Terrain/Blocks/Block.cs" />
+    <Compile Include="Assets/Terrain/Blocks/BlockDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

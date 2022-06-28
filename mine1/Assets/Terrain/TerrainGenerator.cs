@@ -10,6 +10,7 @@ public class TerrainGenerator : MonoBehaviour
     private int depth = 16;
     [SerializeField]
     private List<Chunk> chunks = new List<Chunk>();
+    private BlockDatabase blockDatabase = new BlockDatabase();
     private int blockCount = 0;
 
     void Start()
