@@ -7,6 +7,7 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField]
     private Cube block;
     private int width = 64;
+    private int depth = 16;
     [SerializeField]
     private List<Chunk> chunks = new List<Chunk>();
     private int blockCount = 0;
@@ -20,6 +21,13 @@ public class TerrainGenerator : MonoBehaviour
     {
         
     }
+    private void AddBlockToChunk(int x, int y, int z, Chunk newChunk) 
+    {
+        GameObject newBlock = GameObject.Instantiate(block.gameObject, this.transform);
+        Vector3 coord = new Vector3(x, y, z);
+        newChunk.AddBlock(newBlock, coord);
+        blockCount++;
+    }
 
     private void GenerateChunk(Vector3 pos)
     {
@@ -28,10 +36,11 @@ public class TerrainGenerator : MonoBehaviour
         {
             for (int z = 0; z < width; z++)
             {
-                GameObject newBlock = GameObject.Instantiate(block.gameObject, this.transform);
-                Vector3 coord = new Vector3(x + pos.x, Procedural.BlockHeight(x, z) + pos.y, z + pos.z);
-                newChunk.AddBlock(newBlock, coord);
-                blockCount++;
+                AddBlockToChunk(x + pos.x, Procedural.BlockHeight(x, z) + pos.y, z + pos.z);
+
+                for (int d=1; d<depth; d++) {
+                    AddBlockToChunk(x + pos.x, Procedural.BlockHeight(x, z) + pos.y - d, z + pos.z);
+                }
             }
         }
         Debug.Log("Block count: " + blockCount);
