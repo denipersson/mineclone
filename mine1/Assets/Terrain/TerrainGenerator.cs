@@ -6,7 +6,7 @@ public class TerrainGenerator : MonoBehaviour
 {
     [SerializeField]
     private Cube block;
-    private int width = 64;
+    private int width = 16;
     private int depth = 16;
     [SerializeField]
     private List<Chunk> chunks = new List<Chunk>();
@@ -36,10 +36,10 @@ public class TerrainGenerator : MonoBehaviour
         {
             for (int z = 0; z < width; z++)
             {
-                AddBlockToChunk(x + pos.x, Procedural.BlockHeight(x, z) + pos.y, z + pos.z);
+                AddBlockToChunk((int)(x + pos.x), (int)(Procedural.BlockHeight(x, z) + pos.y), (int)(z + pos.z), newChunk);
 
                 for (int d=1; d<depth; d++) {
-                    AddBlockToChunk(x + pos.x, Procedural.BlockHeight(x, z) + pos.y - d, z + pos.z);
+                    AddBlockToChunk((int)(x + pos.x), (int)(Procedural.BlockHeight(x, z) + pos.y - d), (int)(z + pos.z), newChunk);
                 }
             }
         }
